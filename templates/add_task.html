@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>test flask | app</title>
 </head>
 <body>
-    <h1>Hello i am rendering from the add task html file</h1>
+<h1>adding new task</h1>
+<form action="/submit" method="POST" enctype="application/x-www-form-urlencoded">
+    <label for="title">title:</label>
+    <input type="text" id="title" name="title" required><br><br>
 
-    <a href="/">Home</a>
+    <label for="task">task:</label>
+    <input type="text" id="task" name="task" required><br><br>
+
+    <label for="due">due:</label>
+    <input type="text" id="due" name="due" required><br><br>
+
+    <input type="submit" value="Submit"> <a href="/">All tasks</a>
+</form>
 </body>
 </html>
