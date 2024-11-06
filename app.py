@@ -23,15 +23,13 @@ def index():
     data = Todo.query.all()
     context = []
     for dt in data:
-        dd = {"id":dt.id, "title": dt.title, "task": dt.task, "due": dt.due}
+        dd = {"id": dt.id, "title": dt.title, "task": dt.task, "due": dt.due}
         context.append(dd)
     print(context)
     # print("data: {}".format(data))
     return render_template('todo.html', todo=context)
 
 
-#
-#
 @app.route('/add-task')
 def add_task():
     return render_template('add_task.html')
@@ -64,19 +62,6 @@ def delete_user(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'message': 'An error occurred while deleting the data {}'.format(e)}), 500
-
-
-# @app.route('/edit/<int:id>', methods=['GET'])
-# def edit_form(id):
-#     task = Todo.query.get_or_404(id)
-#     print(task)
-#     return render_template('update.html', tasks=task)
-
-# @app.route('/update_task/<int:id>', methods=['GET'])
-# def update_record(id):
-#     task = Todo.query.get_or_404(id)
-#     print(url_for('add_task'))
-#     return render_template('update.html', task=task)
 
 
 @app.route('/update_task/<int:id>', methods=['GET', 'POST'])
