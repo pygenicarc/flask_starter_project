@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>test flask | app</title>
 </head>
 <body>
-    <h1>Hello i am rendering from the html file</h1>
-    {{ data }}
-    <a href="/add-task">add task</a>
+<h1>listing the number of tasks here</h1>
+<button type="button"><a href="/add-task">add new task</a></button>
+{% for task in tasks %}
+<ul>
+    <li>{{task.name}} - {{task.age}}</li>
+</ul>
+{% endfor %}
 </body>
 </html>

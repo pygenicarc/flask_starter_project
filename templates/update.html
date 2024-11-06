@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test flask | app</title>
+</head>
+<body>
+<h1>update task</h1>
+<form method="POST" enctype="application/x-www-form-urlencoded">
+    <label for="title">title:</label>
+    <input type="text" id="title" name="title" value="{{ task.title}}" required><br><br>
+
+    <label for="task">task:</label>
+    <input type="text" id="task" name="task" value="{{task.title}}" required><br><br>
+
+    <label for="due">due:</label>
+    <input type="text" id="due" name="due" value="{{task.due}}" required><br><br>
+
+    <input type="submit" value="update"> <a href="/">All tasks</a>
+</form>
+</body>
+</html>

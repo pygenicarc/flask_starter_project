@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do app</title>
+    <style>
+        table, th, td {
+        border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello you can store all the to-do's with me <a href="/add-task">add new task</a></h1>
+    <table>
+        <thead>
+            <th>id</th>
+            <th>title</th>
+            <th>task</th>
+            <th>due</th>
+            <th>edit</th>
+            <th>delete</th>
+        </thead>
+        <tbody>
+        {% for task in todo %}
+        <tr>
+            <td>{{task.id}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.task}}</td>
+            <td>{{task.due}}</td>
+            <td><button><a href="/update_task/{{task.id}}">edit</a></button></td>
+            <td><button onclick="confirmDelete({{task.id}})">delete</button></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+    <script>
+        function confirmDelete(taskId) {
+            // Show a confirmation alert
+            const confirmation = confirm("Are you sure you want to delete this task?");
+            if (confirmation) {
+                // If user confirms, proceed with the delete request
+                fetch(`/delete/${taskId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message); // Show response message
+                    if (data.message === 'task deleted successfully') {
+                        window.location.reload(); // Optionally, refresh the page
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>
+</body>
+</html>
