@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ test ]
   push:
-    branches: [ push ]
+    branches: [ test ]
 
 jobs:
   quality-check:
