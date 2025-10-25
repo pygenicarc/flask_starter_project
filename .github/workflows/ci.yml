@@ -1,0 +1,42 @@
+name: CI Checks
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install flake8 black isort pytest coverage bandit
+
+      - name: Lint with flake8
+        run: flake8 .
+
+      - name: Format check with Black
+        run: black --check .
+
+      - name: Sort imports check
+        run: isort . --check-only
+
+      - name: Run tests with coverage
+        run: |
+          coverage run -m pytest
+          coverage report --fail-under=80
+
+      - name: Security check
+        run: bandit -r app/
