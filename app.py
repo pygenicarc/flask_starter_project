@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
+# CI trigger: small comment added to cause a push event
+
 app = Flask('__name__')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:Reddy%4096320@localhost:5433/amazon_app'
