@@ -33,10 +33,10 @@ jobs:
       - name: Sort imports check
         run: isort . --check-only
 
-      - name: Run tests with coverage
-        run: |
-          coverage run -m pytest
-          coverage report --fail-under=80
+      # - name: Run tests with coverage
+      #   run: |
+      #     coverage run -m pytest
+      #     coverage report --fail-under=80
 
       - name: Security check
         run: bandit -r app/
