@@ -1,9 +1,14 @@
+# ...existing code...
+import os
+
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask("__name__")
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
-
+# Use the module name correctly and allow DATABASE_URL to override the default
+app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", "sqlite:///todo.db"
+)
 # testing change
 db = SQLAlchemy(app)
 
@@ -53,7 +58,6 @@ def create_user():
 def delete_user(id):
     task = Todo.query.get(id)
     print("task: {}".format(task))
-
     if not task:
         return jsonify({"message": "task not found"}), 404
     try:
@@ -62,10 +66,7 @@ def delete_user(id):
         return jsonify({"message": "task deleted successfully"}), 200
     except Exception as e:
         db.session.rollback()
-        return (
-            jsonify({"message": "An error occurred {}".format(e)}),
-            500,
-        )
+        return jsonify({"message": "An error occurred {}".format(e)}), 500
 
 
 @app.route("/update_task/<int:id>", methods=["GET", "POST"])
@@ -74,16 +75,13 @@ def update_task(id):
     print(task.id)
     if not task:
         return jsonify({"message": "task not found"}), 404
-
     if request.method == "POST":
         task.title = request.form["title"]
         task.task = request.form["task"]
         task.due = request.form["due"]
-
         try:
             db.session.commit()
             return redirect(url_for("index"))
-
         except Exception as e:
             print(e)
             db.session.rollback()
@@ -93,3 +91,4 @@ def update_task(id):
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5002, debug=True)
+# ...existing code...
